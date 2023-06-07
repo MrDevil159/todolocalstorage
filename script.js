@@ -10,6 +10,7 @@ function deleteAll() {
   pending.innerHTML = "";
   const done = document.getElementById("rowsofentrydone");
   done.innerHTML = "";
+   
 
 }
 window.onload = (event) => {
@@ -28,14 +29,17 @@ function submitAction() {
   document.getElementById("titlemod").value = "";
   document.getElementById("desc").value = "";
   enterToArray(title, desc);
+   
 }
 
 function enterToArray(title, desc) {
+  
   const newTodo = { title: title, description: desc };
   todoList.push(newTodo);
   addRow(title, desc);
   localStorage.setItem("pending", JSON.stringify(todoList));
   console.log(todoList);
+   
 }
 
 function addRow(title, desc) {
@@ -54,9 +58,11 @@ function addRow(title, desc) {
   })">✎</button></div>
     </div>
     `;
+     
 }
 
 function iterateAdd(arraypend) {
+  
   const pending = document.getElementById("rowsofentrypending");
   pending.innerHTML = "";
   for (var i = 0; i < arraypend.length; i++) {
@@ -68,6 +74,7 @@ function iterateAdd(arraypend) {
         </div>
         `;
   }
+   
 }
 function delPending(i) {
   todoList.splice(i, 1);
@@ -76,12 +83,14 @@ function delPending(i) {
   pending.remove();
   localStorage.setItem("pending", JSON.stringify(todoList));
   iterateAdd(todoList);
+   
 }
 
 function editRow(i) {
   document.getElementById("edittitlemod").value = todoList[i].title;
   document.getElementById("editdesc").value = todoList[i].description;
   document.getElementById("idedit").value = i;
+   
 }
 
 function editAction() {
@@ -103,6 +112,7 @@ function editAction() {
     <div class="p-2 bd flex-grow-1 update w-65">${todoList[idedit].description}</div>
     <div class="p-2 bd update w-35 text-center"><button class="btn btn-success" onclick="doneAdd(${idedit})">✓</button><button class="btn btn-danger" onclick="delPending(${idedit})">X</button><button class="btn btn-secondary" type="button" class="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editRow(${idedit})">✎</button></div>
     `;
+     
 }
 
 //Second Part of Done
@@ -116,6 +126,7 @@ function doneAdd(i) {
   localStorage.setItem("pending", JSON.stringify(todoList));
   let arraypend = JSON.parse(localStorage.getItem("pending")) || [];
   iterateAdd(arraypend);
+   
 
 }
 
@@ -125,6 +136,7 @@ function enterToArrayDone(title, desc) {
   addRowDone(title, desc);
   localStorage.setItem("done", JSON.stringify(todoListDone));
   console.log(todoListDone);
+   
 }
 
 function addRowDone(title, desc) {
@@ -137,6 +149,7 @@ function addRowDone(title, desc) {
     <div class="p-2 bdone update w-35 text-center"><button class="btn btn-danger" onclick="delDone(${todoListDone.length - 1})">X</button></div>
     </div>
     `;
+     
 
 }
 
@@ -152,6 +165,7 @@ function iterateAddDone(arraydone) {
         </div>
         `;
   }
+   
 }
 
 function delDone(i) {
@@ -162,4 +176,23 @@ function delDone(i) {
   localStorage.setItem("done", JSON.stringify(todoListDone));
 
   iterateAddDone(todoListDone);
+   
+}
+
+
+function updateTitle() {
+
+    if(todoList.lenth==0) {
+      document.getElementById("pendi").innerText="No Tasks Pending";
+    } else if(todoList.lenth!=0) {
+      document.getElementById("pendi").innerText="Pending Task";
+    }
+    console.log(todoList.length)
+    
+    if(todoListDone.lenth==0) {
+      document.getElementById("donei").innerText="No Tasks Added to Done";
+    } else if(todoListDone.lenth!=0) {
+      document.getElementById("donei").innerText="Done Task";
+    } 
+    
 }
